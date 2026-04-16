@@ -1,0 +1,39 @@
+import api from './axios'
+
+export interface User {
+    id: number,
+    name: string,
+    email: string,
+    phone: string,
+    website?: string,
+    company?: {
+        name: string
+    }
+    address?: {
+        city: string
+    }
+}
+
+export const getUsers = async (): Promise<User[]> => {
+    const response = await api.get<User[]>('/users')
+    return response.data
+}
+
+export const getUser = async (id: number): Promise<User> => {
+    const response = await api.get<User>(`/users/${id}`)
+    return response.data
+}
+
+export const createUser = async (data: Omit<User, 'id'>): Promise<User> => {
+    const response = await api.post<User>('/users', data)
+    return response.data 
+}
+
+export const updateUser = async (id: number, data: Partial<User>): Promise<User> => { //мы же передаем только те поля, которые изменились, верно? А значит нужно было придумать вот этот фокус с Partial<User>
+    const response = await api.put<User>(`/users/${id}`, data)
+    return response.data
+}
+
+export const deleteUser = async (id: number): Promise<void> => {
+    await api.delete<User>(`/users/${id}`)
+}
