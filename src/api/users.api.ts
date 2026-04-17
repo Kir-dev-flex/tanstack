@@ -37,3 +37,16 @@ export const updateUser = async (id: number, data: Partial<User>): Promise<User>
 export const deleteUser = async (id: number): Promise<void> => {
     await api.delete<User>(`/users/${id}`)
 }
+
+export const searchUsers = async (query: string): Promise<User[]> => {
+    await new Promise(resolve => setTimeout(resolve, 300)) // Имитация загрузки
+    
+    const response = await api.get<User[]>('/users');
+    const users = response.data;
+    const lowerQuery = query.toLowerCase();
+    return users.filter(
+        user =>
+        user.name.toLowerCase().includes(lowerQuery) ||
+        user.email.toLowerCase().includes(lowerQuery)
+    );
+}

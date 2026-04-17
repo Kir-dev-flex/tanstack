@@ -3,8 +3,10 @@ import { UserDetails } from './UserDetails'
 import { useState } from 'react'
 import { CreateUserForm } from './CreateUserForm'
 import { useDeleteUser } from '../hooks/useDeleteUser'
+import { SearchBar } from './SearchBar'
 
 export const UserList = () => {
+
 
     const [selectedUserId, setSelectedUserId] = useState<number | null>(null)
 
@@ -68,6 +70,7 @@ export const UserList = () => {
                     </li>
                 ))}
             </ul>
+                <SearchBar />
                 {selectedUserId && <UserDetails id={selectedUserId} />}
                 <CreateUserForm />
         </div>
