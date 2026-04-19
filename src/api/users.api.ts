@@ -50,3 +50,49 @@ export const searchUsers = async (query: string): Promise<User[]> => {
         user.email.toLowerCase().includes(lowerQuery)
     );
 }
+
+export const getUsersPaginated = async (page: number, limit: number = 3): Promise<User[]> => {
+    const response = await api.get<User[]>('/users', {
+        params: {
+            _page: page,
+            _limit: limit,
+        },
+    })
+    return response.data
+}
+
+// Посты пользователя
+export const getUserPosts = async (userId: number): Promise<Post[]> => {
+    const response = await api.get<Post[]>(`/users/${userId}/posts`);
+    return response.data;
+};
+
+// Альбомы пользователя
+export const getUserAlbums = async (userId: number): Promise<Album[]> => {
+    const response = await api.get<Album[]>(`/users/${userId}/albums`);
+    return response.data;
+};
+
+// Комментарии к посту
+export const getPostComments = async (postId: number): Promise<Comment[]> => {
+    const response = await api.get<Comment[]>(`/posts/${postId}/comments`);
+    return response.data;
+};
+
+export interface Post {
+    id: number;
+    title: string;
+    body: string;
+}
+
+export interface Album {
+    id: number;
+    title: string;
+}
+
+export interface Comment {
+    id: number;
+    name: string;
+    email: string;
+    body: string;
+}

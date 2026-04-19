@@ -29,6 +29,10 @@ export const CreateUserForm = () => {
             border: '1px solid #ccc',
             borderRadius: '8px',
             backgroundColor: '#fafafa',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            color: '#000'
         }}
         >
 
@@ -46,10 +50,10 @@ export const CreateUserForm = () => {
         )}
 
             <form onSubmit={handleSubmit}>
-                <label style={{display: 'block'}}>
+                <label style={{display: 'block', color: '#000'}}>
                     Имя
                     <input 
-                        style={{display: 'block'}}
+                        style={{display: 'block', color: '#000'}}
                         type='text' 
                         value={name} 
                         required 
@@ -57,7 +61,7 @@ export const CreateUserForm = () => {
                         disabled={isPending}
                     />
                 </label>
-                <label style={{display: 'block'}}>
+                <label style={{display: 'block', color: '#000'}}>
                     Email
                     <input 
                         style={{display: 'block'}}
@@ -68,7 +72,7 @@ export const CreateUserForm = () => {
                         disabled={isPending}
                     />
                 </label>
-                <label style={{display: 'block'}}>
+                <label style={{display: 'block', color: '#000'}}>
                     Телефон
                     <input 
                         style={{display: 'block'}}

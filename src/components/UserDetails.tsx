@@ -2,8 +2,14 @@ import { useUser } from '../hooks/useUser'
 import { useState } from 'react'
 import { type User } from '../api/users.api'
 import { useUpdateUser } from '../hooks/useUpdateUser'
+import { UserProfile } from './UserProfile';
 
-export const UserDetails = ({id}: {id:number}) => {
+interface UserDetailsProps {
+    id: number;
+    onClose: () => void;
+}
+
+export const UserDetails = ({ id, onClose }: UserDetailsProps) => {
     const {data: user, isLoading, isError, error } = useUser(id)
     const {mutate: updateUser, isPending: isUpdating} = useUpdateUser()
 
@@ -57,12 +63,28 @@ export const UserDetails = ({id}: {id:number}) => {
             {!isEditing?
                 ( // Режим просмотра длеталей
                     <>
+                    <button
+                        onClick={onClose}
+                        style={{
+                        position: 'absolute',
+                        top: '8px',
+                        right: '8px',
+                        background: 'red',
+                        fontSize: '20px',
+                        border: 'none',
+                        cursor: 'pointer',
+                        borderRadius: '5px',
+                        }}
+                    >
+                        X
+                    </button>
                         <p>Имя: {user.name}</p>
                         <p>Почта: {user.email}</p>
                         <p>Телефон: {user.phone}</p>
                         <p>Работа: {user.company?.name || '-'}</p>
                         <p>Сайт: {user.website || '-'}</p>
                         <button onClick={handleEditClick}>Редактировать</button>
+                        <UserProfile userId={user.id} />
                     </>
                 ) : ( // Режим редактирования пользователя
                     <form onSubmit={handleSubmit}>
